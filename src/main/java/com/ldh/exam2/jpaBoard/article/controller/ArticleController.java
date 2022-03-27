@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/user/article")
@@ -20,6 +21,14 @@ public class ArticleController {
     @ResponseBody
     private List<Article> showList() {
         return articleRepository.findAll();
+    }
+
+    // 게시글 상세 보기
+    @RequestMapping("detail")
+    @ResponseBody
+    private Article showDetail(long id) {
+        Optional<Article> article = articleRepository.findById(id);
+        return article.get();
     }
 
 }

@@ -58,8 +58,14 @@ public class ArticleController {
     // 게시글 삭제 보기
     @RequestMapping("doDelete")
     @ResponseBody
-    private void doDelete(long id) {
+    private String doDelete(long id) {
+
+        if (articleRepository.existsById(id) == false) {
+            return "%d번 게시글을 찾을 수 없습니다.".formatted(id);
+        }
+
         articleRepository.deleteById(id);
+        return "%d번 게시글이 삭제되었습니다.".formatted(id);
     }
 
 }

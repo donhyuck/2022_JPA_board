@@ -3,6 +3,10 @@ DROP DATABASE IF EXISTS jpaBoard;
 CREATE DATABASE jpaBoard;
 USE jpaBoard;
 
+# 테이블 삭제
+DROP TABLE `user`;
+DROP TABLE `article`;
+
 # 회원 테이블 생성
 CREATE TABLE `user` (
     id BIGINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -36,9 +40,6 @@ email = 'use3@test.com',
 `name` = '유저3';
 
 SELECT * FROM `user`;
-
-# 테이블 삭제
-DROP TABLE `article`;
 
 # 게시글 테이블 생성
 CREATE TABLE `article` (

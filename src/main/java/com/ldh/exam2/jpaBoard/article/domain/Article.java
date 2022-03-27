@@ -1,4 +1,4 @@
-package com.ldh.exam2.jpaBoard.user.domain;
+package com.ldh.exam2.jpaBoard.article.domain;
 
 import lombok.Getter;
 

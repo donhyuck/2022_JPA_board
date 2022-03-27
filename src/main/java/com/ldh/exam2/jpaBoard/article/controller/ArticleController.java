@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("user/article")
@@ -17,7 +18,7 @@ public class ArticleController {
 
     @RequestMapping("/list")
     @ResponseBody
-    public List<Article> articles() {
+    public List<Article> showList() {
         return articleRepository.findAll();
     }
 
@@ -26,5 +27,18 @@ public class ArticleController {
     public Article article() {
         Article article = new Article();
         return article;
+    }
+
+    @RequestMapping("detail")
+    @ResponseBody
+    public Article showDetail(long id) {
+        Optional<Article> article = articleRepository.findById(id);
+        return article.get();
+    }
+
+    @RequestMapping("delete")
+    @ResponseBody
+    public void doDelete(long id) {
+        articleRepository.deleteById(id);
     }
 }

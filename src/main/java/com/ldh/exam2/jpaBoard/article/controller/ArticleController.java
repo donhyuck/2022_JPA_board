@@ -55,4 +55,11 @@ public class ArticleController {
         return article;
     }
 
+    // 게시글 삭제 보기
+    @RequestMapping("doDelete")
+    @ResponseBody
+    private void doDelete(long id) {
+        articleRepository.deleteById(id);
+    }
+
 }

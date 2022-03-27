@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +30,29 @@ public class ArticleController {
     private Article showDetail(long id) {
         Optional<Article> article = articleRepository.findById(id);
         return article.get();
+    }
+
+    // 게시글 수정하기
+    @RequestMapping("doModify")
+    @ResponseBody
+    private Article doModify(long id, String title, String body) {
+
+        // 수정할 게시글 가져오기
+        Article article = articleRepository.findById(id).get();
+
+        // 수정하기
+        if (title != null) {
+            article.setTitle(title);
+        }
+
+        if (body != null) {
+            article.setBody(body);
+        }
+
+        article.setUpdateDate(LocalDateTime.now());
+
+        articleRepository.save(article);
+        return article;
     }
 
 }

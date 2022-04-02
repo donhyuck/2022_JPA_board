@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/user/article")
+@RequestMapping("/menu/article")
 public class ArticleController {
     @Autowired
     private ArticleRepository articleRepository;

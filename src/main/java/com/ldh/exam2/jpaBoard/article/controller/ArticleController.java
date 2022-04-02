@@ -2,6 +2,8 @@ package com.ldh.exam2.jpaBoard.article.controller;
 
 import com.ldh.exam2.jpaBoard.article.dao.ArticleRepository;
 import com.ldh.exam2.jpaBoard.article.domain.Article;
+import com.ldh.exam2.jpaBoard.user.dao.UserRepository;
+import com.ldh.exam2.jpaBoard.user.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +18,8 @@ import java.util.Optional;
 public class ArticleController {
     @Autowired
     private ArticleRepository articleRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     // 게시글 등록하기
     @RequestMapping("doWrite")
@@ -37,6 +41,10 @@ public class ArticleController {
         article.setUpdateDate(LocalDateTime.now());
         article.setTitle(title);
         article.setBody(body);
+
+        // 게시글 작성자 표시
+        User user = userRepository.findById(1L).get();
+        article.setUser(user);
 
         articleRepository.save(article);
         return "%d번 게시글이 등록되었습니다.".formatted(article.getId());

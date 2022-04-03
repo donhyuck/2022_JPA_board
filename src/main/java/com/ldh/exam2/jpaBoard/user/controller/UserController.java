@@ -15,6 +15,7 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    // 회원가입하기
     @RequestMapping("doJoin")
     @ResponseBody
     public String doJoin(String email, String password, String name) {
@@ -49,5 +50,34 @@ public class UserController {
 
         userRepository.save(user);
         return "%s님 %d번 회원으로 가입되었습니다.".formatted(user.getName(), user.getId());
+    }
+
+    // 회원 로그인 하기
+    @RequestMapping("doLogin")
+    @ResponseBody
+    public String doLogin(String email, String password) {
+
+        if (email == null || email.trim().length() == 0 ) {
+            return "이메일을 입력해주세요.";
+        }
+        email = email.trim();
+
+        if (password == null || password.trim().length() == 0 ) {
+            return "비밀번호를 입력해주세요.";
+        }
+        password = password.trim();
+
+        // 회원등록여부 확인
+        User user = userRepository.findByEmail(email).get();
+        
+        if (user == null) {
+            return "입력하신 이메일(%s)을 잘못 입력하시거나 등록되지 않은 회원입니다.".formatted(email);
+        }
+
+        if (user.getPassword().equals(password) == false) {
+            return "비밀번호가 틀렸습니다.";
+        }
+
+        return "%s님 환영합니다.".formatted(user.getName());
     }
 }

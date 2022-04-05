@@ -7,6 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -21,7 +24,7 @@ public class UserController {
     @ResponseBody
     public String doJoin(String email, String password, String name) {
 
-        if (email == null || email.trim().length() == 0 ) {
+        if (email == null || email.trim().length() == 0) {
             return "이메일을 입력해주세요.";
         }
         email = email.trim();
@@ -32,12 +35,12 @@ public class UserController {
             return "입력하신 이메일(%s)은 이미 사용중입니다.".formatted(email);
         }
 
-        if (password == null || password.trim().length() == 0 ) {
+        if (password == null || password.trim().length() == 0) {
             return "비밀번호를 입력해주세요.";
         }
         password = password.trim();
 
-        if (name == null || name.trim().length() == 0 ) {
+        if (name == null || name.trim().length() == 0) {
             return "이름을 입력해주세요.";
         }
         name = name.trim();
@@ -56,14 +59,14 @@ public class UserController {
     // 회원 로그인 하기
     @RequestMapping("doLogin")
     @ResponseBody
-    public String doLogin(String email, String password) {
+    public String doLogin(String email, String password, HttpServletRequest req, HttpServletResponse resp) {
 
-        if (email == null || email.trim().length() == 0 ) {
+        if (email == null || email.trim().length() == 0) {
             return "이메일을 입력해주세요.";
         }
         email = email.trim();
 
-        if (password == null || password.trim().length() == 0 ) {
+        if (password == null || password.trim().length() == 0) {
             return "비밀번호를 입력해주세요.";
         }
         password = password.trim();
@@ -74,7 +77,7 @@ public class UserController {
         // 해결
         // User user = userRepository.findByEmail(email).orElse(null); // 방법1
         Optional<User> user = userRepository.findByEmail(email); // 방법2
-        
+
         if (user.isEmpty()) {
             return "입력하신 이메일(%s)을 잘못 입력하시거나 등록되지 않은 회원입니다.".formatted(email);
         }
@@ -86,15 +89,39 @@ public class UserController {
             return "비밀번호가 틀렸습니다.";
         }
 
+        // 로그인시 쿠키정보설정
+        Cookie cookie = new Cookie("loginedUserId", user.get().getId() + "");
+        resp.addCookie(cookie);
+
         return "%s님 환영합니다.".formatted(user.get().getName());
     }
 
     // 로그인 후 내 정보 보기
     @RequestMapping("me")
     @ResponseBody
-    public User showMe(long userId) {
+    public User showMe(HttpServletRequest req) {
 
-        Optional<User> user = userRepository.findById(userId);
+        // 쿠키정보 가져오기
+        boolean isLogined = false;
+        long loginedUserId = 0;
+
+        Cookie[] cookies = req.getCookies();
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("loginedUserId")) {
+                    isLogined = true;
+                    loginedUserId = Long.parseLong(cookie.getValue());
+                }
+            }
+        }
+
+        // 로그인 유저가 없는 경우
+        if (isLogined == false) {
+            return null;
+        }
+
+        Optional<User> user = userRepository.findById(loginedUserId);
 
         if (user.isEmpty()) {
             return null;

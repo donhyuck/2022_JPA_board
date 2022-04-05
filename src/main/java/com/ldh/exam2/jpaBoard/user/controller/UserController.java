@@ -88,4 +88,18 @@ public class UserController {
 
         return "%s님 환영합니다.".formatted(user.get().getName());
     }
+
+    // 로그인 후 내 정보 보기
+    @RequestMapping("me")
+    @ResponseBody
+    public User showMe(long userId) {
+
+        Optional<User> user = userRepository.findById(userId);
+
+        if (user.isEmpty()) {
+            return null;
+        }
+
+        return user.get();
+    }
 }

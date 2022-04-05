@@ -25,13 +25,13 @@ public class ArticleController {
     @RequestMapping("doWrite")
     @ResponseBody
     private String doWrite(String title, String body) {
-        
-        if (title == null || title.trim().length() == 0 ) {
+
+        if (title == null || title.trim().length() == 0) {
             return "제목을 입력해주세요.";
         }
         title = title.trim();
 
-        if (body == null || body.trim().length() == 0 ) {
+        if (body == null || body.trim().length() == 0) {
             return "내용을 입력해주세요.";
         }
         body = body.trim();

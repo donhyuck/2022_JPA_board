@@ -127,4 +127,17 @@ public class UserController {
 
         return user.get();
     }
+
+    // 로그아웃 하기
+    @RequestMapping("doLogout")
+    @ResponseBody
+    public String doLogout(HttpSession session) {
+
+        if (session.getAttribute("loginedUserId") != null) {
+            session.removeAttribute("loginedUserId");
+            return "로그아웃 되었습니다.";
+        }
+
+        return "로그인 중인 회원이 없습니다.";
+    }
 }

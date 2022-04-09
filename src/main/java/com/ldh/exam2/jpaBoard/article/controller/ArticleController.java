@@ -22,6 +22,12 @@ public class ArticleController {
     @Autowired
     private UserRepository userRepository;
 
+    // 게시글 작성페이지 보기
+    @RequestMapping("write")
+    private String showWrite() {
+        return "menu/article/write";
+    }
+
     // 게시글 등록하기
     @RequestMapping("doWrite")
     @ResponseBody
@@ -59,13 +65,6 @@ public class ArticleController {
         model.addAttribute("articles", articles);
 
         return "menu/article/list";
-    }
-
-    // 게시글 목록 보기
-    @RequestMapping("showList2")
-    @ResponseBody
-    private List<Article> showList2() {
-        return articleRepository.findAll();
     }
 
     // 게시글 상세 보기

@@ -54,7 +54,12 @@ public class ArticleController {
         article.setUser(user);
 
         articleRepository.save(article);
-        return "%d번 게시글이 등록되었습니다.".formatted(article.getId());
+        return """
+                <script>
+                alert('%d번 게시물이 생성되었습니다.');
+                location.replace('showList');
+                </script>
+                """.formatted(article.getId());
     }
 
     // 게시글 목록 보기
@@ -70,7 +75,7 @@ public class ArticleController {
     // 게시글 상세 보기
     @RequestMapping("detail")
     @ResponseBody
-    private Article showDetail(long id) {
+    public Article showDetail(long id) {
         Optional<Article> article = articleRepository.findById(id);
         return article.get();
     }

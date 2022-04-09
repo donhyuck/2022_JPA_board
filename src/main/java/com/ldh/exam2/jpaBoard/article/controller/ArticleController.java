@@ -74,10 +74,14 @@ public class ArticleController {
 
     // 게시글 상세 보기
     @RequestMapping("detail")
-    @ResponseBody
-    public Article showDetail(long id) {
-        Optional<Article> article = articleRepository.findById(id);
-        return article.get();
+    private String showDetail(long id, Model model) {
+
+        Optional<Article> optionalArticle = articleRepository.findById(id);
+        Article article = optionalArticle.get();
+
+        model.addAttribute("article", article);
+
+        return "menu/article/detail";
     }
 
     // 게시글 수정하기

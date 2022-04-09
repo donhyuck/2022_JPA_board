@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시물 본문</title>
+</head>
+<body>
+    <div>
+        <a href="write">글쓰기</a> / <a href="showList">게시글 목록</a>
+    </div>
+    <hr>
+
+    <h2>게시물 본문</h2>
+    <hr>
+    <div>
+        <div>
+            <div>번호 : [[${article.id}]]</div>
+        </div>
+        <div>
+            <div>등록일 : [[${article.regDate}]]</div>
+        </div>
+        <div>
+            <div>제목 : [[${article.title}]]</div>
+        </div>
+        <div>
+            <div>내용 : [[${article.body}]]</div>
+        </div>
+    </div>
+</body>
+</html>

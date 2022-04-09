@@ -6,6 +6,7 @@ import com.ldh.exam2.jpaBoard.user.dao.UserRepository;
 import com.ldh.exam2.jpaBoard.user.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -52,7 +53,10 @@ public class ArticleController {
 
     // 게시글 목록 보기
     @RequestMapping("showList")
-    private String showList() {
+    private String showList(Model model) {
+
+        model.addAttribute("age", 22);
+        model.addAttribute("name", "제임스");
         return "menu/article/list";
     }
 

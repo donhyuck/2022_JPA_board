@@ -1,11 +1,18 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>게시물 목록</title>
 </head>
 <body>
     <h1>게시물 목록</h1>
+    <div>
+        안녕! <br>
+        난 <span th:text="${name}"></span> (이)라고 하고<br>
+        [[${age}]]살이야.
+    </div>
+    <hr>
+
     <ul>
         <li>내용 1</li>
         <li>내용 2</li>

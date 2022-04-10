@@ -25,7 +25,27 @@ public class ArticleController {
 
     // 게시글 작성페이지 보기
     @RequestMapping("write")
-    private String showWrite() {
+    private String showWrite(HttpSession session, Model model) {
+
+        // 작성자 확인
+        boolean isLogined = false;
+        long loginedUserId = 0;
+
+        if (session.getAttribute("loginedUserId") != null) {
+            isLogined = true;
+            loginedUserId = (long) session.getAttribute("loginedUserId");
+        }
+
+        if (isLogined == false) {
+            // ResponseBody를 붙이면 스크립트를 출력가능하다. 하지만 경로이동은 안되는 상태이다.
+            return """
+                    <script>
+                    alert('로그인 후 이용해주세요.');
+                    history.back();
+                    </script>
+                    """;
+        }
+
         return "menu/article/write";
     }
 
@@ -41,6 +61,15 @@ public class ArticleController {
         if (session.getAttribute("loginedUserId") != null) {
             isLogined = true;
             loginedUserId = (long) session.getAttribute("loginedUserId");
+        }
+
+        if (isLogined == false) {
+            return """
+                    <script>
+                    alert('로그인 후 이용해주세요.');
+                    history.back();
+                    </script>
+                    """;
         }
 
         if (title == null || title.trim().length() == 0) {

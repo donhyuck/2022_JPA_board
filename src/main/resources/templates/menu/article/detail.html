@@ -9,8 +9,9 @@
         <a href="write">글쓰기</a> / <a href="showList">게시글 목록</a>
     </div>
     <div>
-        <a th:href="@{modify(id=${article.id})}">글수정</a>
-        / <a onclick="if (confirm('삭제하시겠습니까?') == false) return false;" th:href="@{doDelete(id=${article.id})}">글삭제</a>
+        <a th:if="${article.user.id == session.loginedUserId}" th:href="@{modify(id=${article.id})}">글수정 / </a>
+        <a th:if="${article.user.id == session.loginedUserId}" onclick="if (confirm('삭제하시겠습니까?') == false) return false;"
+             th:href="@{doDelete(id=${article.id})}">글삭제</a>
     </div>
     <hr>
 

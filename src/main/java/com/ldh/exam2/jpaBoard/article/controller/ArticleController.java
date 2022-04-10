@@ -83,7 +83,7 @@ public class ArticleController {
         article.setUser(user);
 
         articleRepository.save(article);
-        
+
         return """
                 <script>
                 alert('%d번 게시물이 생성되었습니다.');
@@ -182,7 +182,7 @@ public class ArticleController {
     // 게시글 삭제 보기
     @RequestMapping("doDelete")
     @ResponseBody
-    private String doDelete(long id) {
+    private String doDelete(HttpSession session, long id) {
 
         if (articleRepository.existsById(id) == false) {
             return """
@@ -191,6 +191,36 @@ public class ArticleController {
                     history.back();
                     </script>
                     """.formatted(id);
+        }
+
+        // 로그인 확인
+        boolean isLogined = false;
+        long loginedUserId = 0;
+
+        if (session.getAttribute("loginedUserId") != null) {
+            isLogined = true;
+            loginedUserId = (long) session.getAttribute("loginedUserId");
+        }
+
+        if (isLogined == false) {
+            return """
+                    <script>
+                    alert('로그인 후 이용해주세요.');
+                    history.back();
+                    </script>
+                    """;
+        }
+
+        Article article = articleRepository.findById(id).get();
+
+        // 해당 게시글에 대한 권한 확인
+        if (article.getUser().getId() != loginedUserId) {
+            return """
+                    <script>
+                    alert('해당 게시물에 대한 삭제 권한이 없습니다.');
+                    history.back();
+                    </script>
+                    """;
         }
 
         articleRepository.deleteById(id);

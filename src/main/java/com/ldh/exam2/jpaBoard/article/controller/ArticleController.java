@@ -37,13 +37,10 @@ public class ArticleController {
         }
 
         if (isLogined == false) {
-            // ResponseBody를 붙이면 스크립트를 출력가능하다. 하지만 경로이동은 안되는 상태이다.
-            return """
-                    <script>
-                    alert('로그인 후 이용해주세요.');
-                    history.back();
-                    </script>
-                    """;
+            // common/js.html 도입
+            model.addAttribute("msg", "로그인 후 이용해주세요.");
+            model.addAttribute("historyBack", true);
+            return "common/js";
         }
 
         return "menu/article/write";

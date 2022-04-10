@@ -27,7 +27,7 @@ public class ArticleController {
     @RequestMapping("write")
     private String showWrite(HttpSession session, Model model) {
 
-        // 작성자 확인
+        // 로그인 확인
         boolean isLogined = false;
         long loginedUserId = 0;
 
@@ -60,15 +60,7 @@ public class ArticleController {
             loginedUserId = (long) session.getAttribute("loginedUserId");
         }
 
-        if (isLogined == false) {
-            return """
-                    <script>
-                    alert('로그인 후 이용해주세요.');
-                    history.back();
-                    </script>
-                    """;
-        }
-
+        // 공백(미입력) 확인
         if (title == null || title.trim().length() == 0) {
             return "제목을 입력해주세요.";
         }
@@ -79,6 +71,7 @@ public class ArticleController {
         }
         body = body.trim();
 
+        // 게시글 등록
         Article article = new Article();
         article.setRegDate(LocalDateTime.now());
         article.setUpdateDate(LocalDateTime.now());
@@ -90,6 +83,7 @@ public class ArticleController {
         article.setUser(user);
 
         articleRepository.save(article);
+        
         return """
                 <script>
                 alert('%d번 게시물이 생성되었습니다.');
@@ -122,11 +116,36 @@ public class ArticleController {
 
     // 게시글 수정 페이지 보기
     @RequestMapping("modify")
-    private String showModify(long id, Model model) {
+    private String showModify(HttpSession session, long id, Model model) {
+
+        // 로그인 확인
+        boolean isLogined = false;
+        long loginedUserId = 0;
+
+        if (session.getAttribute("loginedUserId") != null) {
+            isLogined = true;
+            loginedUserId = (long) session.getAttribute("loginedUserId");
+        }
+
+        if (isLogined == false) {
+            // common/js.html 도입
+            model.addAttribute("msg", "로그인 후 이용해주세요.");
+            model.addAttribute("historyBack", true);
+            return "common/js";
+        }
 
         Optional<Article> optionalArticle = articleRepository.findById(id);
         Article article = optionalArticle.get();
 
+        // 해당 게시글에 대한 권한 확인
+        if (article.getUser().getId() != loginedUserId) {
+            // common/js.html 도입
+            model.addAttribute("msg", "해당 게시물에 대한 수정 권한이 없습니다.");
+            model.addAttribute("historyBack", true);
+            return "common/js";
+        }
+
+        // 수정할 게시글 보내기
         model.addAttribute("article", article);
 
         return "menu/article/modify";
@@ -135,7 +154,7 @@ public class ArticleController {
     // 게시글 수정하기
     @RequestMapping("doModify")
     @ResponseBody
-    private String doModify(long id, String title, String body) {
+    private String doModify(HttpSession session, long id, String title, String body) {
 
         // 수정할 게시글 가져오기
         Article article = articleRepository.findById(id).get();

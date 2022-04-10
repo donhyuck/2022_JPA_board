@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +32,16 @@ public class ArticleController {
     // 게시글 등록하기
     @RequestMapping("doWrite")
     @ResponseBody
-    private String doWrite(String title, String body) {
+    private String doWrite(String title, String body, HttpSession session) {
+
+        // 작성자 확인
+        boolean isLogined = false;
+        long loginedUserId = 0;
+
+        if (session.getAttribute("loginedUserId") != null) {
+            isLogined = true;
+            loginedUserId = (long) session.getAttribute("loginedUserId");
+        }
 
         if (title == null || title.trim().length() == 0) {
             return "제목을 입력해주세요.";
@@ -50,7 +60,7 @@ public class ArticleController {
         article.setBody(body);
 
         // 게시글 작성자 표시
-        User user = userRepository.findById(1L).get();
+        User user = userRepository.findById(loginedUserId).get();
         article.setUser(user);
 
         articleRepository.save(article);

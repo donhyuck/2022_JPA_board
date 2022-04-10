@@ -84,10 +84,22 @@ public class ArticleController {
         return "menu/article/detail";
     }
 
+    // 게시글 수정 페이지 보기
+    @RequestMapping("modify")
+    private String showModify(long id, Model model) {
+
+        Optional<Article> optionalArticle = articleRepository.findById(id);
+        Article article = optionalArticle.get();
+
+        model.addAttribute("article", article);
+
+        return "menu/article/modify";
+    }
+
     // 게시글 수정하기
     @RequestMapping("doModify")
     @ResponseBody
-    private Article doModify(long id, String title, String body) {
+    private String doModify(long id, String title, String body) {
 
         // 수정할 게시글 가져오기
         Article article = articleRepository.findById(id).get();
@@ -104,7 +116,12 @@ public class ArticleController {
         article.setUpdateDate(LocalDateTime.now());
 
         articleRepository.save(article);
-        return article;
+        return """
+                <script>
+                alert('%d번 게시물이 수정되었습니다.');
+                location.replace('detail?id=%d');
+                </script>
+                """.formatted(article.getId(), article.getId());
     }
 
     // 게시글 삭제 보기

@@ -182,9 +182,19 @@ public class UserController {
 
         if (session.getAttribute("loginedUserId") != null) {
             session.removeAttribute("loginedUserId");
-            return "로그아웃 되었습니다.";
+            return """
+                    <script>
+                    alert('로그아웃 되었습니다.');
+                    location.replace("/menu/article/showList");
+                    </script>
+                    """;
         }
 
-        return "로그인 중인 회원이 없습니다.";
+        return """
+                <script>
+                alert('로그인 중인 회원이 없습니다.');
+                history.back();
+                </script>
+                """;
     }
 }

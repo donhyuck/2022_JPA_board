@@ -20,29 +20,73 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    // 회원 가입 페이지 보기
+    @RequestMapping("join")
+    private String showJoin(HttpSession session, Model model) {
+
+        // 로그인 확인
+        boolean isLogined = false;
+        long loginedUserId = 0;
+
+        if (session.getAttribute("loginedUserId") != null) {
+            isLogined = true;
+            loginedUserId = (long) session.getAttribute("loginedUserId");
+        }
+
+        // 로그인 중 가입 방지
+        if (isLogined == true) {
+            // common/js.html 도입
+            model.addAttribute("msg", "로그아웃 후 이용해주세요.");
+            model.addAttribute("historyBack", true);
+            return "common/js";
+        }
+
+        return "menu/user/join";
+    }
+
     // 회원가입하기
     @RequestMapping("doJoin")
     @ResponseBody
     public String doJoin(String email, String password, String name) {
 
         if (email == null || email.trim().length() == 0) {
-            return "이메일을 입력해주세요.";
+            return """
+                    <script>
+                    alert('이메일을 입력해주세요.');
+                    history.back();
+                    </script>
+                    """;
         }
         email = email.trim();
 
         // 회원가입시 이메일 중복체크
         boolean existsByEmail = userRepository.existsByEmail(email);
         if (existsByEmail) {
-            return "입력하신 이메일(%s)은 이미 사용중입니다.".formatted(email);
+            return """
+                    <script>
+                    alert('입력하신 이메일(%s)은 이미 사용중입니다.');
+                    history.back();
+                    </script>
+                    """.formatted(email);
         }
 
         if (password == null || password.trim().length() == 0) {
-            return "비밀번호를 입력해주세요.";
+            return """
+                    <script>
+                    alert('비밀번호를 입력해주세요.');
+                    history.back();
+                    </script>
+                    """;
         }
         password = password.trim();
 
         if (name == null || name.trim().length() == 0) {
-            return "이름을 입력해주세요.";
+            return """
+                    <script>
+                    alert('이름을 입력해주세요.');
+                    history.back();
+                    </script>
+                    """;
         }
         name = name.trim();
 
@@ -54,7 +98,13 @@ public class UserController {
         user.setName(name);
 
         userRepository.save(user);
-        return "%s님 %d번 회원으로 가입되었습니다.".formatted(user.getName(), user.getId());
+        return """
+                <script>
+                alert('%s님 %d번 회원으로 가입되었습니다.');
+                location.replace("/menu/article/showList");
+                </script>
+                """.formatted(user.getName(), user.getId());
+
     }
 
     // 회원 로그인 페이지 보기

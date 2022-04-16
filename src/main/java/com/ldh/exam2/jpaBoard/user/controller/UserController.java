@@ -4,6 +4,7 @@ import com.ldh.exam2.jpaBoard.user.dao.UserRepository;
 import com.ldh.exam2.jpaBoard.user.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -56,18 +57,52 @@ public class UserController {
         return "%s님 %d번 회원으로 가입되었습니다.".formatted(user.getName(), user.getId());
     }
 
+    // 회원 로그인 페이지 보기
+    @RequestMapping("login")
+    private String showLogin(HttpSession session, Model model) {
+
+        // 로그인 확인
+        boolean isLogined = false;
+        long loginedUserId = 0;
+
+        if (session.getAttribute("loginedUserId") != null) {
+            isLogined = true;
+            loginedUserId = (long) session.getAttribute("loginedUserId");
+        }
+
+        // 중복 로그인 방지
+        if (isLogined == true) {
+            // common/js.html 도입
+            model.addAttribute("msg", "로그아웃 후 이용해주세요.");
+            model.addAttribute("historyBack", true);
+            return "common/js";
+        }
+
+        return "menu/user/login";
+    }
+
     // 회원 로그인 하기
     @RequestMapping("doLogin")
     @ResponseBody
     public String doLogin(String email, String password, HttpServletRequest req, HttpServletResponse resp) {
 
         if (email == null || email.trim().length() == 0) {
-            return "이메일을 입력해주세요.";
+            return """
+                    <script>
+                    alert('이메일을 입력해주세요.');
+                    history.back();
+                    </script>
+                    """;
         }
         email = email.trim();
 
         if (password == null || password.trim().length() == 0) {
-            return "비밀번호를 입력해주세요.";
+            return """
+                    <script>
+                    alert('비밀번호를 입력해주세요.');
+                    history.back();
+                    </script>
+                    """;
         }
         password = password.trim();
 
@@ -79,14 +114,21 @@ public class UserController {
         Optional<User> user = userRepository.findByEmail(email); // 방법2
 
         if (user.isEmpty()) {
-            return "입력하신 이메일(%s)을 잘못 입력하시거나 등록되지 않은 회원입니다.".formatted(email);
+            return """
+                    <script>
+                    alert('입력하신 이메일(%s)을 잘못 입력하시거나 등록되지 않은 회원입니다.');
+                    history.back();
+                    </script>
+                    """.formatted(email);
         }
 
-        System.out.println("user.getPassword() : " + user.get().getPassword());
-        System.out.println("password : " + password);
-
         if (user.get().getPassword().equals(password) == false) {
-            return "비밀번호가 틀렸습니다.";
+            return """
+                    <script>
+                    alert('비밀번호가 틀렸습니다.');
+                    location.replace("/menu/article/showList");
+                    </script>
+                    """;
         }
 
         // 로그인시 쿠키정보설정
@@ -97,7 +139,12 @@ public class UserController {
         HttpSession session = req.getSession();
         session.setAttribute("loginedUserId", user.get().getId());
 
-        return "%s님 환영합니다.".formatted(user.get().getName());
+        return """
+                <script>
+                alert('%s님 환영합니다.');
+                location.replace("/menu/article/showList");
+                </script>
+                """.formatted(user.get().getName());
     }
 
     // 로그인 후 내 정보 보기

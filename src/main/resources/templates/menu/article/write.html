@@ -2,7 +2,7 @@
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
       layout:decorate="~{menu/common/layout}">
 <head>
-    <title>게시물 본문</title>
+    <title>게시물 작성</title>
 </head>
 <main layout:fragment="main">
 
@@ -10,21 +10,17 @@
     <hr>
     <form action="doWrite" method="post">
         <div>
-            <div>제목</div>
             <div>
-                <input type="text" name="title" placeholder="제목을 입력해주세요.">
-            </div>
-        </div>
-        <div>
-            <div>내용</div>
-            <div>
-                <textarea name="body" placeholder="내용을 입력해주세요."></textarea>
+                제목 : <input type="text" name="title" placeholder="제목을 입력해주세요.">
             </div>
         </div>
         <div>
             <div>
-                <input type="submit" value="작성">
+                내용 : <textarea name="body" placeholder="내용을 입력해주세요."></textarea>
             </div>
+        </div>
+        <div>
+            <input type="submit" value="작성">
         </div>
     </form>
 </main>

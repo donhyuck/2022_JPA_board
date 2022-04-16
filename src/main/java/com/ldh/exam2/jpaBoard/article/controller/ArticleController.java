@@ -62,12 +62,22 @@ public class ArticleController {
 
         // 공백(미입력) 확인
         if (title == null || title.trim().length() == 0) {
-            return "제목을 입력해주세요.";
+            return """
+                    <script>
+                    alert('제목을 입력해주세요.');
+                    history.back();
+                    </script>
+                    """;
         }
         title = title.trim();
 
         if (body == null || body.trim().length() == 0) {
-            return "내용을 입력해주세요.";
+            return """
+                    <script>
+                    alert('내용을 입력해주세요.');
+                    history.back();
+                    </script>
+                    """;
         }
         body = body.trim();
 

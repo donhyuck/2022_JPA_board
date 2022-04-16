@@ -73,7 +73,7 @@ public class UserController {
         // 중복 로그인 방지
         if (isLogined == true) {
             // common/js.html 도입
-            model.addAttribute("msg", "로그아웃 후 이용해주세요.");
+            model.addAttribute("msg", "이미 로그인되었습니다.");
             model.addAttribute("historyBack", true);
             return "common/js";
         }

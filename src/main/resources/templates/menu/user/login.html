@@ -4,19 +4,27 @@
 <head>
     <title>회원 로그인</title>
 </head>
-<main layout:fragment="main">
+<main layout:fragment="main" class="mt-[20px]">
 
-    <h1>회원 로그인</h1>
+    <h1 class="container mx-auto font-bold text-[1.3rem]">회원 로그인</h1>
     <hr>
-    <form action="doLogin" method="post">
-        <div>
-            아이디 : <input type="email" name="email" placeholder="이메일을 입력해주세요.">
+    <form action="doLogin" method="post" class="container mx-auto">
+        <div class="form-control">
+            <label class="label">
+                <span class="label-text">이메일</span>
+            </label>
+            <input type="email" name="email" placeholder="이메일을 입력해주세요." class="input input-bordered w-full max-w-xs"
+                   maxlength="50">
         </div>
-        <div>
-            비밀번호 : <input type="password" name="password" placeholder="비밀번호를 입력해주세요.">
+        <div class="form-control">
+            <label class="label">
+                <span class="label-text">이메일</span>
+            </label>
+            <input type="password" name="password" placeholder="비밀번호를 입력해주세요."
+                   class="input input-bordered w-full max-w-xs" maxlength="50">
         </div>
-        <div>
-            <input type="submit" value="로그인">
+        <div class="mt-[20px]">
+            <input type="submit" value="로그인" class="btn btn-primary">
         </div>
     </form>
 </main>

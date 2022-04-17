@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" class="light"
+      data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -10,6 +11,9 @@
 
     <!-- 테일윈드 적용 -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- 지마켓 산스 폰트 적용  -->
+    <link rel="stylesheet" href="/resource/common.css">
 
     <style>
         /* 다크 모드 */
@@ -28,10 +32,17 @@
 
 <body>
 
-<div class="text-lg font-bold">로고</div>
+<!-- 데이지UI 적용 -->
+<link href="https://cdn.jsdelivr.net/npm/daisyui@2.14.0/dist/full.css" rel="stylesheet" type="text/css"/>
+
+<div class="container mx-auto">
+    <div class="text-[2rem] font-bold py-[10px]">
+        <a href="/">로고</a>
+    </div>
+</div>
 
 <div>
-    <ul class="flex">
+    <ul class="flex ml-[-10px]">
         <li><a href="/menu/article/write" class="block p-[10px] hover:text-[#FF0000]">글쓰기</a></li>
         <li><a href="/menu/article/showList" class="block p-[10px] hover:text-[#FF0000]">글 리스트</a></li>
         <li><a href="/menu/user/login" class="block p-[10px] hover:text-[#FF0000]">로그인</a></li>

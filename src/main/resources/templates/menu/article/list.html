@@ -4,11 +4,11 @@
 <head>
     <title>게시물 목록</title>
 </head>
-<main layout:fragment="main">
+<main layout:fragment="main" class="mt-[20px]">
 
-    <h1>게시물 목록</h1>
-    <ul>
-        <li th:each="article : ${articles}">
+    <h1 class="container mx-auto font-bold text-[1.3rem]">게시물 목록</h1>
+    <ul class="container mx-auto">
+        <li th:each="article : ${articles}"  class="label">
             <a th:href="@{detail(id=${article.id})}">
                 [[${article.id}]] / [[${article.regDate}]] / [[${article.title}]]
             </a>

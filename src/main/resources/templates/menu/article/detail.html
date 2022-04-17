@@ -4,30 +4,30 @@
 <head>
     <title>게시물 본문</title>
 </head>
-<main layout:fragment="main">
+<main layout:fragment="main" class="mt-[20px]">
 
-    <h2>게시물 본문</h2>
+    <h2 class="container mx-auto font-bold text-[1.3rem]">게시물 본문</h2>
 
-    <div>
-        <a th:if="${article.user.id == session.loginedUserId}" th:href="@{modify(id=${article.id})}">글수정 / </a>
-        <a th:if="${article.user.id == session.loginedUserId}" onclick="if (confirm('삭제하시겠습니까?') == false) return false;"
-           th:href="@{doDelete(id=${article.id})}">글삭제</a>
-    </div>
-    <hr>
-
-    <div>
-        <div>
+    <div class="container mx-auto">
+        <div class="mt-[10px]">
             <div>번호 : [[${article.id}]]</div>
         </div>
-        <div>
+        <div class="mt-[5px]">
             <div>등록일 : [[${article.regDate}]]</div>
         </div>
-        <div>
+        <div class="mt-[5px]">
             <div>제목 : [[${article.title}]]</div>
         </div>
-        <div>
+        <div class="mt-[5px]">
             <div>내용 : [[${article.body}]]</div>
         </div>
+    </div>
+
+    <div class="container mx-auto">
+        <a class="btn btn-primary" th:if="${article.user.id == session.loginedUserId}" th:href="@{modify(id=${article.id})}">글수정</a>
+        <a class="btn btn-primary" th:if="${article.user.id == session.loginedUserId}"
+           onclick="if (confirm('삭제하시겠습니까?') == false) return false;"
+           th:href="@{doDelete(id=${article.id})}">글삭제</a>
     </div>
 </main>
 </html>

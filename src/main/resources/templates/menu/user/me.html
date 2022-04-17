@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{menu/common/layout}">
+<head>
+    <title>회원정보</title>
+</head>
+<main layout:fragment="main" class="mt-[20px]">
+
+    <h1 class="container mx-auto font-bold text-[1.3rem]">회원정보</h1>
+
+    <div class="container mx-auto">
+        <div class="my-[5px]">
+            <div >회원번호 : [[${user.id}]]번</div>
+        </div>
+        <div class="my-[5px]">
+            <div>이메일 : [[${user.email}]]</div>
+        </div>
+        <div class="my-[5px]">
+            <div>가입일 : [[${user.regDate}]]</div>
+        </div>
+        <div class="my-[5px]">
+            <div>이름 : [[${user.name}]]</div>
+        </div>
+
+        <ul class="flex ml-[-10px]">
+            <li><a href="/menu/user/modify" class="block p-[10px] hover:text-[#FF0000]">회원정보 수정</a></li>
+            <li><a href="/menu/user/pwChange" class="block p-[10px] hover:text-[#FF0000]">비밀번호 변경</a></li>
+        </ul>
+    </div>
+</main>
+</html>

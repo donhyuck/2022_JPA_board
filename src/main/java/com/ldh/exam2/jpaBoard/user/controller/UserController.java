@@ -199,8 +199,7 @@ public class UserController {
 
     // 로그인 후 내 정보 보기
     @RequestMapping("me")
-    @ResponseBody
-    public User showMe(HttpSession session) {
+    public String showMe(HttpSession session, Model model) {
 
         boolean isLogined = false;
         long loginedUserId = 0;
@@ -213,16 +212,24 @@ public class UserController {
 
         // 로그인 유저가 없는 경우
         if (isLogined == false) {
-            return null;
+            model.addAttribute("msg", "로그인 후 이용해주세요.");
+            model.addAttribute("replaceUri","login");
+            return "common/js";
         }
 
-        Optional<User> user = userRepository.findById(loginedUserId);
+        Optional<User> OptionalUser = userRepository.findById(loginedUserId);
 
-        if (user.isEmpty()) {
-            return null;
+        if (OptionalUser.isEmpty()) {
+            model.addAttribute("msg", "유저 정보를 찾을 수 없습니다.");
+            model.addAttribute("historyBack", true);
+            return "common/js";
         }
 
-        return user.get();
+        User user = OptionalUser.get();
+
+        model.addAttribute("user", user);
+
+        return "menu/user/me";
     }
 
     // 로그아웃 하기

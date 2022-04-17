@@ -7,14 +7,11 @@
 <main layout:fragment="main">
 
     <h2>게시물 수정</h2>
-    <hr>
-    <div>
-        <a th:href="@{detail(id=${article.id})}">글본문</a>
-    </div>
 
     <form action="doModify" method="post">
         <div>
             <input type="hidden" name="id" th:value="${article.id}">
+            [[${article.id}]]번 글
         </div>
         <div>
             <div>제목 : <input type="text" name="title" th:value="${article.title}" placeholder="새 제목을 입력해주세요."></div>
@@ -25,6 +22,7 @@
         <div>
             <div>
                 <input type="submit" value="수정">
+                <a th:href="@{detail(id=${article.id})}">돌아가기</a>
             </div>
         </div>
     </form>

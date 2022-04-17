@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{menu/common/layout}">
+<head>
+    <title>회원정보 수정</title>
+</head>
+<main layout:fragment="main">
+
+    <h2>회원정보 수정</h2>
+
+    <form action="doInfoModify" method="post">
+        <div>
+            [[${user.id}]]번 회원
+        </div>
+        <div>
+            <div>새 비밀번호 : <input type="password" name="password" placeholder="새 비밀번호를 입력해주세요."></div>
+        </div>
+        <div>
+            <div>
+                <input type="submit" value="수정">
+                <a th:href="menu/article/showList">취소</a>
+            </div>
+        </div>
+    </form>
+</main>
+</html>

@@ -1,5 +1,6 @@
 package com.ldh.exam2.jpaBoard.user.controller;
 
+import com.ldh.exam2.jpaBoard.article.domain.Article;
 import com.ldh.exam2.jpaBoard.user.dao.UserRepository;
 import com.ldh.exam2.jpaBoard.user.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -213,7 +214,7 @@ public class UserController {
         // 로그인 유저가 없는 경우
         if (isLogined == false) {
             model.addAttribute("msg", "로그인 후 이용해주세요.");
-            model.addAttribute("replaceUri","login");
+            model.addAttribute("replaceUri", "login");
             return "common/js";
         }
 
@@ -230,6 +231,26 @@ public class UserController {
         model.addAttribute("user", user);
 
         return "menu/user/me";
+    }
+
+    // 회원정보 수정 페이지 보기
+    @RequestMapping("infoModify")
+    private String showModify(HttpSession session, Model model) {
+
+        long loginedUserId = 0;
+
+        // 세션정보 가져오기
+        if (session.getAttribute("loginedUserId") != null) {
+            loginedUserId = (long) session.getAttribute("loginedUserId");
+        }
+
+        Optional<User> OptionalUser = userRepository.findById(loginedUserId);
+        User user = OptionalUser.get();
+
+        // 수정할 게시글 보내기
+        model.addAttribute("user", user);
+
+        return "menu/user/infoModify";
     }
 
     // 로그아웃 하기

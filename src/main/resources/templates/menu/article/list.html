@@ -7,7 +7,6 @@
 <main layout:fragment="main">
 
     <h1>게시물 목록</h1>
-    <hr>
     <ul>
         <li th:each="article : ${articles}">
             <a th:href="@{detail(id=${article.id})}">

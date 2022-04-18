@@ -6,23 +6,24 @@
 </head>
 <main layout:fragment="main" class="mt-[20px]">
 
-    <h2 class="container mx-auto font-bold text-[1.3rem]">게시물 작성</h2>
+    <h2 class="container mx-auto font-bold text-[1.3rem] px-[10px]">게시글 작성</h2>
 
-    <form action="doWrite" method="post" class="container mx-auto">
-        <div  class="form-control mt-[10px]">
+    <form action="doWrite" method="post" class="container mx-auto px-[10px]">
+        <div class="form-control mt-[10px]">
             <label class="label">
                 <span class="label-text">제목</span>
             </label>
-            <input class="input input-bordered w-full max-w-xs" maxlength="50" type="text" name="title" placeholder="제목을 입력해주세요.">
+            <input type="text"required name="title" placeholder="제목을 입력해주세요." class="input input-bordered w-full max-w-xs" maxlength="100">
         </div>
-        <div>
+        <div class="form-control mt-[10px]">
             <label class="label">
                 <span class="label-text">내용</span>
             </label>
-            <textarea class="input input-bordered w-full max-w-xs" maxlength="50" name="body" placeholder="내용을 입력해주세요."></textarea>
+            <textarea required name="body" placeholder="내용을 입력해주세요." class="input input-bordered w-full max-w-xs" rows="10"></textarea>
         </div>
         <div class="mt-[20px]">
-            <input type="submit" value="작성" class="btn btn-primary">
+            <input type="submit" value="작성" class="btn btn-primary btn-sm">
+            <button class="btn btn-sm" onclick="history.back();">취소</button>
         </div>
     </form>
 </main>

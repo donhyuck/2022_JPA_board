@@ -13,18 +13,19 @@
             <label class="label">
                 <span class="label-text">이메일</span>
             </label>
-            <input type="email" name="email" placeholder="이메일을 입력해주세요." class="input input-bordered w-full max-w-xs"
+            <input type="email" required name="email" placeholder="이메일을 입력해주세요." class="input input-bordered w-full max-w-xs"
                    maxlength="50">
         </div>
         <div class="form-control">
             <label class="label">
                 <span class="label-text">비밀번호</span>
             </label>
-            <input type="password" name="password" placeholder="비밀번호를 입력해주세요."
+            <input type="password" required name="password" placeholder="비밀번호를 입력해주세요."
                    class="input input-bordered w-full max-w-xs" maxlength="50">
         </div>
         <div class="mt-[20px]">
-            <input type="submit" value="로그인" class="btn btn-primary">
+            <input type="submit" value="로그인" class="btn btn-primary btn-sm">
+            <button class="btn btn-sm" onclick="history.back();">취소</button>
         </div>
     </form>
 </main>

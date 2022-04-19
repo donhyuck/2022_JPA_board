@@ -193,7 +193,7 @@ public class UserController {
         return """
                 <script>
                 alert('%s님 환영합니다.');
-                location.replace("/menu/article/showList");
+                location.replace("/");
                 </script>
                 """.formatted(user.get().getName());
     }
@@ -263,7 +263,7 @@ public class UserController {
             return """
                     <script>
                     alert('로그아웃 되었습니다.');
-                    location.replace("/menu/article/showList");
+                    location.replace("/");
                     </script>
                     """;
         }

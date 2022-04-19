@@ -234,23 +234,17 @@ public class UserController {
     }
 
     // 회원정보 수정 페이지 보기
-    @RequestMapping("infoModify")
+    @RequestMapping("modify")
     private String showModify(HttpSession session, Model model) {
 
-        long loginedUserId = 0;
-
-        // 세션정보 가져오기
-        if (session.getAttribute("loginedUserId") != null) {
-            loginedUserId = (long) session.getAttribute("loginedUserId");
-        }
-
+        long loginedUserId = (long) session.getAttribute("loginedUserId");
         Optional<User> OptionalUser = userRepository.findById(loginedUserId);
         User user = OptionalUser.get();
 
         // 수정할 게시글 보내기
         model.addAttribute("user", user);
 
-        return "menu/user/infoModify";
+        return "menu/user/modify";
     }
 
     // 로그아웃 하기

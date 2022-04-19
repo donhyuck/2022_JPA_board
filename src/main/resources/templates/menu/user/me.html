@@ -17,15 +17,15 @@
                 <div>이메일 : [[${user.email}]]</div>
             </div>
             <div class="my-[5px]">
-                <div>가입일 : [[${user.regDate}]]</div>
+                <div>가입일 : [[${#strings.substring(user.regDate,0, 10)}]]</div>
             </div>
             <div class="my-[5px]">
                 <div>이름 : [[${user.name}]]</div>
             </div>
 
-            <ul class="flex ml-[-10px] mt-[15px]">
-                <li><a href="/menu/user/infoModify" class="btn btn-primary block p-[10px] hover:text-[red] mr-[10px]">회원정보 수정</a></li>
-            </ul>
+            <div class="flex ml-[5px] mt-[15px]">
+                <div><a href="/menu/user/modify" class="btn btn-sm btn-primary block p-[10px] hover:text-[red] mr-[10px]">회원정보 수정</a></div>
+            </div>
         </div>
     </div>
 </main>

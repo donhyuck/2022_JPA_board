@@ -8,17 +8,17 @@
 
     <h2>회원정보 수정</h2>
 
-    <form action="doInfoModify" method="post">
+    <form action="doModify" method="post">
         <div>
             [[${user.id}]]번 회원
         </div>
         <div>
-            <div>새 비밀번호 : <input type="password" name="password" placeholder="새 비밀번호를 입력해주세요."></div>
+            <div>새 이메일 : <input type="text" name="password" th:value="${user.email}" placeholder="새 이메일을 입력해주세요."></div>
         </div>
         <div>
             <div>
-                <input type="submit" value="수정">
-                <a th:href="menu/article/showList">취소</a>
+                <input type="submit" value="수정" class="btn btn-primary btn-sm">
+                <a class="btn btn-sm" href="/">취소</a>
             </div>
         </div>
     </form>

@@ -98,7 +98,7 @@ public class ArticleController {
         return """
                 <script>
                 alert('%d번 게시물이 생성되었습니다.');
-                location.replace('showList');
+                location.replace('/');
                 </script>
                 """.formatted(article.getId());
     }
@@ -107,7 +107,7 @@ public class ArticleController {
     @RequestMapping("showList")
     private String showList(Model model) {
 
-        List<Article> articles = articleRepository.findAll();
+        List<Article> articles = articleRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         model.addAttribute("articles", articles);
 
         return "menu/article/list";

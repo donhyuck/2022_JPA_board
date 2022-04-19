@@ -6,26 +6,33 @@
 </head>
 <main layout:fragment="main" class="mt-[20px]">
 
-    <h2 class="container mx-auto font-bold text-[1.3rem] px-[10px]">[[${article.title}]]</h2>
+    <div class="text-content container card bg-base-100 shadow-xl w-70 ml-[20px] px-[10px] box-border lg:w-[40%] xl:w-[50%] 2xl:w-[60%] ">
+        <div class="card-body">
 
-    <div class="container mx-auto px-[10px] mt-[10px]">
-        <div>
-            <span class="badge">[[${article.id}]]번 글</span>
-        </div>
-        <div class="mt-[10px]">
-            <span class="badge badge-outline">등록일 : [[${#strings.substring(article.regDate,0, 10)}]]</span>
-            <span class="badge badge-outline">작성자 : [[${article.user.name}]]</span>
-        </div>
-        <div class="mt-[10px] whitespace-pre-line">[[${article.body}]]</div>
-    </div>
+            <h2 class="card-title">
+                <span class="font-bold text-[1.8rem]">[[${article.title}]]</span>
+            </h2>
 
-    <div class="container mx-auto px-[10px] mt-[10px]">
-        <a class="btn btn-primary btn-sm" href="/menu/article/showList">목록</a>
-        <button class="btn btn-sm" onclick="history.back();">뒤로가기</button>
-        <a class="btn btn-sm" th:if="${article.user.id == session.loginedUserId}" th:href="@{modify(id=${article.id})}">글수정</a>
-        <a class="btn btn-sm" th:if="${article.user.id == session.loginedUserId}"
-           onclick="if (confirm('삭제하시겠습니까?') == false) return false;"
-           th:href="@{doDelete(id=${article.id})}">글삭제</a>
+            <div class="container mx-auto mt-[15px]">
+                <div>
+                    <span class="badge">[[${article.id}]]번 글</span>
+                </div>
+                <div class="mt-[10px]">
+                    <span class="badge badge-outline">등록일 : [[${#strings.substring(article.regDate,0, 10)}]]</span>
+                    <span class="badge badge-outline ml-[10px]">작성자 : [[${article.user.name}]]</span>
+                </div>
+                <div class="mt-[10px] whitespace-pre-line">[[${article.body}]]</div>
+            </div>
+
+            <div class="card-actions container mx-auto px-[10px] mt-[10px]">
+                <a class="btn btn-primary btn-sm" href="/menu/article/showList">목록</a>
+                <button class="btn btn-sm" onclick="history.back();">뒤로가기</button>
+                <a class="btn btn-sm" th:if="${article.user.id == session.loginedUserId}" th:href="@{modify(id=${article.id})}">글수정</a>
+                <a class="btn btn-sm" th:if="${article.user.id == session.loginedUserId}"
+                   onclick="if (confirm('삭제하시겠습니까?') == false) return false;"
+                   th:href="@{doDelete(id=${article.id})}">글삭제</a>
+            </div>
+        </div>
     </div>
 </main>
 </html>

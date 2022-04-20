@@ -329,6 +329,50 @@ public class UserController {
         return "menu/user/pwModify";
     }
 
+    // 비밀번호 변경하기
+    @RequestMapping("doPwModify")
+    @ResponseBody
+    private String doPwModify(HttpSession session, long id, String password, String newPassword) {
+
+        // 수정할 회원정보 가져오기
+        Optional<User> OptionalUser = userRepository.findById(id);
+        User user = OptionalUser.get();
+
+        // 비밀번호 확인
+        if (!user.getPassword().equals(password)) {
+            return """
+                    <script>
+                    alert('현재 비밀번호가 잘못되었습니다. 확인해주세요.');
+                    history.back();
+                    </script>
+                    """;
+        }
+
+        // 동일 비밀번호 제외
+        if (password.equals(newPassword)) {
+            return """
+                    <script>
+                    alert('이전 비밀번호와 동일한 비밀번호입니다.');
+                    history.back();
+                    </script>
+                    """;
+        }
+
+        // 비밀번호 변경하기
+        user.setPassword(newPassword);
+        userRepository.save(user);
+
+        // 비밀번호 변경후 로그아웃
+        session.removeAttribute("loginedUserId");
+
+        return """
+                <script>
+                alert('비밀번호가 변경되었습니다. 다시 로그인해주세요.');
+                location.replace('/');
+                </script>
+                """;
+    }
+
     // 로그아웃 하기
     @RequestMapping("doLogout")
     @ResponseBody

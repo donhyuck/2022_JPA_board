@@ -6,25 +6,25 @@
 </head>
 <main layout:fragment="main" class="mt-[20px]">
 
-    <h2 class="container mx-auto font-bold text-[1.3rem] px-[10px]">회원정보 수정</h2>
+    <h2 class="container mx-auto font-bold text-[1.3rem] px-[10px]">비밀번호 변경</h2>
 
-    <form action="doModify" method="post" class="container mx-auto px-[10px]">
+    <form action="doPwModify" method="post" class="container mx-auto px-[10px]">
         <div class="mt-[10px]">
             [[${user.id}]]번 회원
         </div>
         <div class="form-control mt-[20px]">
             <label class="label">
-                <span class="label-text">이메일변경</span>
+                <span class="label-text">비밀번호확인</span>
             </label>
-            <input type="email" name="email" th:value="${user.email}" placeholder="새 이메일을 입력해주세요." class="input input-bordered w-full max-w-xs"
+            <input type="password" required name="password" placeholder="현재 비밀번호를 입력해주세요." class="input input-bordered w-full max-w-xs"
                    maxlength="50">
         </div>
 
         <div class="form-control mt-[20px]">
             <label class="label">
-                <span class="label-text">이름변경</span>
+                <span class="label-text">비밀번호변경</span>
             </label>
-            <input type="text" name="name" th:value="${user.name}" placeholder="새 이름을 입력해주세요." class="input input-bordered w-full max-w-xs"
+            <input type="password" required name="newPassword" placeholder="새로운 비밀번호를 입력해주세요." class="input input-bordered w-full max-w-xs"
                    maxlength="50">
         </div>
         <div class="mt-[20px]">

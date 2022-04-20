@@ -247,6 +247,20 @@ public class UserController {
         return "menu/user/modify";
     }
 
+    // 비밀번호 변경 페이지 보기
+    @RequestMapping("pwModify")
+    private String showPwModify(HttpSession session, Model model) {
+
+        long loginedUserId = (long) session.getAttribute("loginedUserId");
+        Optional<User> OptionalUser = userRepository.findById(loginedUserId);
+        User user = OptionalUser.get();
+
+        // 수정할 게시글 보내기
+        model.addAttribute("user", user);
+
+        return "menu/user/pwModify";
+    }
+
     // 로그아웃 하기
     @RequestMapping("doLogout")
     @ResponseBody

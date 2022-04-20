@@ -237,25 +237,93 @@ public class UserController {
     @RequestMapping("modify")
     private String showModify(HttpSession session, Model model) {
 
-        long loginedUserId = (long) session.getAttribute("loginedUserId");
+        // 로그인 확인
+        boolean isLogined = false;
+        long loginedUserId = 0;
+
+        if (session.getAttribute("loginedUserId") != null) {
+            isLogined = true;
+            loginedUserId = (long) session.getAttribute("loginedUserId");
+        }
+
+        if (isLogined == false) {
+            // common/js.html 도입
+            model.addAttribute("msg", "로그인 후 이용해주세요.");
+            model.addAttribute("historyBack", true);
+            return "common/js";
+        }
+
         Optional<User> OptionalUser = userRepository.findById(loginedUserId);
         User user = OptionalUser.get();
 
-        // 수정할 게시글 보내기
+        // 수정할 회원정보 보내기
         model.addAttribute("user", user);
 
         return "menu/user/modify";
+    }
+
+    // 회원정보 수정하기
+    @RequestMapping("doModify")
+    @ResponseBody
+    private String doModify(HttpSession session, long id, String email, String name) {
+
+        // 수정할 회원정보 가져오기
+        Optional<User> OptionalUser = userRepository.findById(id);
+        User user = OptionalUser.get();
+
+        // 로그인 이메일 중복 방지
+        boolean existsByEmail = userRepository.existsByEmail(email);
+        if (existsByEmail) {
+            return """
+                    <script>
+                    alert('입력하신 이메일(%s)은 이미 사용중입니다.');
+                    history.back();
+                    </script>
+                    """.formatted(email);
+        }
+
+        // 수정하기
+        if (email != null) {
+            user.setEmail(email);
+        }
+
+        if (name != null) {
+            user.setName(name);
+        }
+
+        userRepository.save(user);
+        return """
+                <script>
+                alert('%s님의 회원정보가 수정되었습니다.');
+                location.replace('/');
+                </script>
+                """.formatted(user.getName());
     }
 
     // 비밀번호 변경 페이지 보기
     @RequestMapping("pwModify")
     private String showPwModify(HttpSession session, Model model) {
 
-        long loginedUserId = (long) session.getAttribute("loginedUserId");
+        // 로그인 확인
+        boolean isLogined = false;
+        long loginedUserId = 0;
+
+        if (session.getAttribute("loginedUserId") != null) {
+            isLogined = true;
+            loginedUserId = (long) session.getAttribute("loginedUserId");
+        }
+
+        if (isLogined == false) {
+            // common/js.html 도입
+            model.addAttribute("msg", "로그인 후 이용해주세요.");
+            model.addAttribute("historyBack", true);
+            return "common/js";
+        }
+
         Optional<User> OptionalUser = userRepository.findById(loginedUserId);
         User user = OptionalUser.get();
 
-        // 수정할 게시글 보내기
+        // 수정할 회원정보 보내기
         model.addAttribute("user", user);
 
         return "menu/user/pwModify";

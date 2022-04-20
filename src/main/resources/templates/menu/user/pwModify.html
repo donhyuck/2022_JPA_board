@@ -11,6 +11,7 @@
     <form action="doPwModify" method="post" class="container mx-auto px-[10px]">
         <div class="mt-[10px]">
             [[${user.id}]]번 회원
+            <input type="hidden" name="id" th:value="${user.id}">
         </div>
         <div class="form-control mt-[20px]">
             <label class="label">

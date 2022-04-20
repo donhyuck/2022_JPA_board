@@ -50,15 +50,9 @@ public class UserController {
     @ResponseBody
     public String doJoin(String email, String password, String name) {
 
-        if (email == null || email.trim().length() == 0) {
-            return """
-                    <script>
-                    alert('이메일을 입력해주세요.');
-                    history.back();
-                    </script>
-                    """;
-        }
         email = email.trim();
+        password = password.trim();
+        name = name.trim();
 
         // 회원가입시 이메일 중복체크
         boolean existsByEmail = userRepository.existsByEmail(email);
@@ -70,26 +64,6 @@ public class UserController {
                     </script>
                     """.formatted(email);
         }
-
-        if (password == null || password.trim().length() == 0) {
-            return """
-                    <script>
-                    alert('비밀번호를 입력해주세요.');
-                    history.back();
-                    </script>
-                    """;
-        }
-        password = password.trim();
-
-        if (name == null || name.trim().length() == 0) {
-            return """
-                    <script>
-                    alert('이름을 입력해주세요.');
-                    history.back();
-                    </script>
-                    """;
-        }
-        name = name.trim();
 
         User user = new User();
         user.setRegDate(LocalDateTime.now());
@@ -105,7 +79,6 @@ public class UserController {
                 location.replace("/menu/article/showList");
                 </script>
                 """.formatted(user.getName(), user.getId());
-
     }
 
     // 회원 로그인 페이지 보기
@@ -137,24 +110,7 @@ public class UserController {
     @ResponseBody
     public String doLogin(String email, String password, HttpServletRequest req, HttpServletResponse resp) {
 
-        if (email == null || email.trim().length() == 0) {
-            return """
-                    <script>
-                    alert('이메일을 입력해주세요.');
-                    history.back();
-                    </script>
-                    """;
-        }
         email = email.trim();
-
-        if (password == null || password.trim().length() == 0) {
-            return """
-                    <script>
-                    alert('비밀번호를 입력해주세요.');
-                    history.back();
-                    </script>
-                    """;
-        }
         password = password.trim();
 
         // 회원등록여부 확인

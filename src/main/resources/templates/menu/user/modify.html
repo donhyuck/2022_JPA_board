@@ -4,22 +4,32 @@
 <head>
     <title>회원정보 수정</title>
 </head>
-<main layout:fragment="main">
+<main layout:fragment="main" class="mt-[20px]">
 
-    <h2>회원정보 수정</h2>
+    <h2 class="container mx-auto font-bold text-[1.3rem] px-[10px]">회원정보 수정</h2>
 
-    <form action="doModify" method="post">
-        <div>
+    <form action="doModify" method="post" class="container mx-auto px-[10px]">
+        <div class="mt-[10px]">
             [[${user.id}]]번 회원
         </div>
-        <div>
-            <div>새 이메일 : <input type="text" name="password" th:value="${user.email}" placeholder="새 이메일을 입력해주세요."></div>
+        <div class="form-control mt-[20px]">
+            <label class="label">
+                <span class="label-text">이메일변경</span>
+            </label>
+            <input type="email" name="email" th:value="${user.email}" placeholder="새 이메일을 입력해주세요." class="input input-bordered w-full max-w-xs"
+                   maxlength="50">
         </div>
-        <div>
-            <div>
-                <input type="submit" value="수정" class="btn btn-primary btn-sm">
-                <a class="btn btn-sm" href="/">취소</a>
-            </div>
+
+        <div class="form-control mt-[20px]">
+            <label class="label">
+                <span class="label-text">이름변경</span>
+            </label>
+            <input type="text" name="name" th:value="${user.name}" placeholder="새 이름을 입력해주세요." class="input input-bordered w-full max-w-xs"
+                   maxlength="50">
+        </div>
+        <div class="mt-[20px]">
+            <input type="submit" value="수정" class="btn btn-primary btn-sm">
+            <a class="btn btn-sm" href="/">취소</a>
         </div>
     </form>
 </main>
